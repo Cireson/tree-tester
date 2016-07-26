@@ -1,4 +1,4 @@
-<?php 
+<?php
 ob_start();
 if (!defined('DS'))   define('DS'  , DIRECTORY_SEPARATOR);
 if (!defined('ROOT')) define('ROOT', dirname(__FILE__));
@@ -7,6 +7,8 @@ if (!defined('HOME')) define ('HOME', __FILE__);
 
 require_once(ROOT . DS . 'lib' . DS .'toolkit.php');
 require_once(ROOT . DS . 'config.php');
+// Functions for actions
+require_once(ROOT . DS . 'lib' . DS .'functions.php');
 
 if (c::get('display.errors',false)){
   @ini_set('display_errors',1);
@@ -28,7 +30,7 @@ $versions = count($varsFiles);
 
 // Generate Questions for each version
 $allQuestion = array();
-for ($i=0; $i < $versions; $i++) { 
+for ($i=0; $i < $versions; $i++) {
   $allQuestion[] = $questions;
 }
 $questionCount = count($questions) * $versions;
@@ -37,8 +39,6 @@ $questionCount = count($questions) * $versions;
 if (s::get('id',false) === false){
   resetQ();
 }
-// Functions for actions
-require_once(ROOT . DS . 'lib' . DS .'functions.php');
 
 // ACTIONS
 if (get('action',false) != false){
@@ -94,7 +94,7 @@ if (get('action',false) != false){
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="index,follow">
-  
+
   <title>Tree Testing</title>
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -156,7 +156,7 @@ if (get('action',false) != false){
 
   <?php else: ?>
 
-    <?php 
+    <?php
       // Saved already?
       if (s::get('didsave',false) === false){
 
@@ -168,10 +168,10 @@ if (get('action',false) != false){
           'comment'  => s::get('comment',false)
         );
         $path = DATA . DS . s::get('id'). '_'.mt_rand().'.json';
-        
+
         // Save to file
         if (is_writable($path) && c::get('deliver.method') === "file"){
-          
+
           $write = f::write($path, $save);
           s::set('didsave',true);
 
